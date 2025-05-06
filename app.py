@@ -3,8 +3,9 @@ from datetime import datetime
 from docxtpl import DocxTemplate
 
 input_file = "Notas de alumnos.xlsx"
-input_latter = "Carta.docx"
+input_latter = DocxTemplate("Carta.docx")
 
+#Activamos el libro y la hoja de excel para trabajar con el
 try:
     wordbook = op.load_workbook(input_file)
     sheet_input = wordbook.active
@@ -22,4 +23,13 @@ for indexrow, row in enumerate(sheet_input.iter_rows(min_row=2), start=2):
     if nombre and apellido:
         print(f'Procesando los datos de {nombre} {apellido}')
         
-        
+    Valores = {
+        'Nombre': nombre,
+        'Apellido': apellido,
+        'Nota': nota,
+        'Materia': materia
+    }
+    
+    input_latter.render(Valores)
+    
+    
